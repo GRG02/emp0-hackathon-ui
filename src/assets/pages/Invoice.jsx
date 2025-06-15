@@ -10,6 +10,7 @@ function Invoice() {
 
     const getAllUrl = 'https://default725423d5dac742bd8d49ac42da8a30.c2.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/3932e983c9f24c3e95a299b78551a9c6/triggers/manual/paths/invoke/?api-version=1&tenantId=tId&environmentName=Default-725423d5-dac7-42bd-8d49-ac42da8a30c2&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=41TjVxCf73vT4dZHZDj--UM01GKpeYwl6kY7hdRYe8o'
     const extractUrl = 'https://default725423d5dac742bd8d49ac42da8a30.c2.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/36c30f252e8b4221a2ee8c3e1e70a855/triggers/manual/paths/invoke/?api-version=1&tenantId=tId&environmentName=Default-725423d5-dac7-42bd-8d49-ac42da8a30c2&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=JCIeg8n4GRBc9FE9oSM9coFjy_aclrwBbJieE1-AK-w'
+    const setIsNewUrl = 'https://default725423d5dac742bd8d49ac42da8a30.c2.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/8bef31d32ba7454a9c9f1e3ff9a51336/triggers/manual/paths/invoke/?api-version=1&tenantId=tId&environmentName=Default-725423d5-dac7-42bd-8d49-ac42da8a30c2&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=-6A_hWmvsEPXQ5Nu25FkfjMWKge3ENyI8n3BasZWTxU'
 
     const getAllInvoice = async () => {
         try {
@@ -35,6 +36,14 @@ function Invoice() {
         }
     };
 
+    const setIsNew = async (ID) => {
+        try {
+            const res = await axios.post(setIsNewUrl, {
+                ID: ID
+            });
+        } catch (error) {
+        }
+    };
 
     useEffect(() => {
         getAllInvoice();
@@ -43,65 +52,67 @@ function Invoice() {
     return (
         <Box sx={container}>
             <Box sx={{ height: '4.5rem' }} />
-            <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'start', width: '100%', }}>
-                <Typography sx={{ fontSize: '2rem', fontWeight: 'bold' }}>ตรวจสอบเอกสารใบแจ้งหนี้</Typography>
-                <Button sx={{ ...ml_bt, ml: 'auto' }}>Click</Button>
+            <Typography sx={{ fontSize: '2rem', fontWeight: 'bold', mb: 2, alignSelf: 'flex-start' }}>
+                ตรวจสอบเอกสารใบแจ้งหนี้
+            </Typography>
+
+            {/* Action bar */}
+            <Box sx={{
+                display: 'flex',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+                justifyContent: 'space-between',
+                width: '100%',
+                bgcolor: '#fff3e0',
+                p: 2,
+                borderRadius: 2,
+                boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+            }}>
+                {/* <Autocomplete ... /> */}
+                <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
+                    <Button sx={{ ...ml_bt, ml: '0' }} onClick={getAllInvoice}>
+                        reset
+                    </Button>
+                    <Typography sx={{ fontSize: '1rem', ml: 2 }}>
+                        ส่งใบแจ้งหนี้มาที่ <strong style={{ color: 'orangered' }}>s6552410024@live.sau.ac.th</strong> ระบบจะใช้เวลารับอีเมลประมาณ 10-20 วินาที โปรดรอสักครู่แล้วกดปุ่ม reset
+                    </Typography>
+                </Box>
             </Box>
+
             <Box sx={{ height: '1rem' }} />
-            <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'start', width: '100%', }}>
-                {/* <Autocomplete
-                    options={[...new Set(items.map(item => item.company_name).filter(Boolean))]} // ดึงเฉพาะชื่อบริษัทที่ไม่ซ้ำและไม่ null
-                    value={company}
-                    onChange={(event, newValue) => setCompany(newValue)}
-                    renderInput={(params) => <TextField {...params} label="เลือกคู่ค้า" />}
-                    freeSolo
-                    sx={{ width: 225 }}
-                />
-                <Autocomplete
-                    options={[...new Set(items.map(item => item.product_name).filter(Boolean))]} // ดึงเฉพาะชื่อบริษัทที่ไม่ซ้ำและไม่ null
-                    value={product}
-                    onChange={(event, newValue) => setProduct(newValue)}
-                    renderInput={(params) => <TextField {...params} label="เลือกสินค้า" />}
-                    freeSolo
-                    sx={{ width: 225, ml: '1rem' }}
-                /> */}
-                {/* <TextField
-                    label="ค้นตั้งแต่"
-                    value={start}
-                    onChange={(event) => setStart(event.target.value)}
-                    type="date"
-                    InputLabelProps={{ shrink: true }}
-                    InputProps={{ inputProps: { max: end } }}
-                    sx={{ width: 175, ml: '1rem' }}
-                />
-                <TextField
-                    label="จนถึง"
-                    value={end}
-                    onChange={(event) => setEnd(event.target.value)}
-                    type="date"
-                    InputLabelProps={{ shrink: true }}
-                    InputProps={{ inputProps: { min: start } }}
-                    sx={{ width: 175, ml: '1rem' }}
-                /> */}
-                <Button sx={{ ...ml_bt, ml: '1rem' }} onClick={getAllInvoice}>reset</Button>
-                <Typography sx={{ fontSize: '1.25rem', ml: '1rem' }}>ส่งใบแจ้งหนี้มาที่อีเมล s6552410024@live.sau.ac.th</Typography>
-            </Box>
-            <Box sx={{ height: '1rem' }} />
-            <TableContainer sx={{ maxHeight: '70vh', border: '2px solid darkorange' }}>
-                <Table aria-label="simple table">
-                    <TableHead sx={{ bgcolor: 'darkorange' }}>
+
+            {/* Table */}
+            <TableContainer
+                sx={{
+                    maxHeight: '70vh',
+                    border: '1px solid #ffa726',
+                    borderRadius: 2,
+                    boxShadow: '0 2px 6px rgba(0,0,0,0.05)'
+                }}
+            >
+                <Table stickyHeader>
+                    <TableHead>
                         <TableRow>
-                            <TableCell align='center' sx={{ color: 'white' }}>ชื่อใบแจ้งหนี้</TableCell>
-                            <TableCell align='center' sx={{ color: 'white' }}>จากอีเมล</TableCell>
-                            <TableCell align='center' sx={{ color: 'white' }}>เมื่อวันที่</TableCell>
-                            <TableCell align='center' sx={{ color: 'white' }}>ไฟล์ใบแจ้งหนี้</TableCell>
-                            <TableCell align='center' sx={{ color: 'white' }}>ยืนยัน</TableCell>
-                            <TableCell align='center' sx={{ color: 'white' }}>ตีกลับ</TableCell>
+                            {['ชื่อใบแจ้งหนี้', 'จากอีเมล', 'เมื่อวันที่', 'ไฟล์ใบแจ้งหนี้', 'ยืนยัน', 'ตีกลับ'].map((text, idx) => (
+                                <TableCell
+                                    key={idx}
+                                    align="center"
+                                    sx={{
+                                        color: 'white',
+                                        fontWeight: 'bold',
+                                        backgroundColor: '#fb8c00', // กำหนดพื้นหลังตรงนี้
+                                        zIndex: 1 // ป้องกันซ้อนกันผิดพลาดเวลา scroll
+                                    }}
+                                >
+                                    {text}
+                                </TableCell>
+                            ))}
                         </TableRow>
                     </TableHead>
+
                     <TableBody>
                         {items.length === 0 ? (
-                            <TableRow sx={{ border: 'none', bgcolor: '#f9f9f9' }}>
+                            <TableRow>
                                 <TableCell
                                     colSpan={6}
                                     align="center"
@@ -109,7 +120,8 @@ function Invoice() {
                                         border: 'none',
                                         padding: '2rem',
                                         color: '#999',
-                                        fontStyle: 'italic'
+                                        fontStyle: 'italic',
+                                        bgcolor: '#f9f9f9'
                                     }}
                                 >
                                     ยังไม่มีข้อมูล
@@ -121,43 +133,75 @@ function Invoice() {
                                     key={index}
                                     sx={{
                                         backgroundColor: index % 2 === 0 ? '#f9f9f9' : '#ffffff',
-                                        '&:hover': { backgroundColor: '#e3f2fd' },
+                                        '&:hover': { backgroundColor: '#f1f8e9' },
                                     }}
                                 >
                                     <TableCell align="center">
                                         {row.invoice_name ?? '-'}
+                                        {row.is_new === "1" && (
+                                            <span
+                                                style={{
+                                                    color: 'white',
+                                                    backgroundColor: 'red',
+                                                    fontWeight: 'bold',
+                                                    padding: '2px 6px',
+                                                    borderRadius: '4px',
+                                                    fontSize: '0.75rem',
+                                                    marginLeft: '0.5rem', // เว้นห่างจากชื่อ
+                                                    display: 'inline-block'
+                                                }}
+                                            >
+                                                NEW
+                                            </span>
+                                        )}
                                     </TableCell>
-                                    <TableCell align="center">
-                                        {row.sender_email ?? '-'}
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        {row.createdAt ?? '-'}
-                                    </TableCell>
+                                    <TableCell align="center">{row.sender_email ?? '-'}</TableCell>
+                                    <TableCell align="center">{row.createdAt ?? '-'}</TableCell>
                                     <TableCell align="center">
                                         <Button
                                             variant="text"
                                             sx={{
-                                                color: 'blue',      // สีฟ้า
-                                                textDecoration: 'underline',  // เส้นใต้
-                                                padding: 0,         // ลด padding ถ้าต้องการให้เหมือนลิงก์จริงๆ
-                                                minWidth: 'auto',   // ลดขนาดปุ่มให้พอดีข้อความ
+                                                color: '#1e88e5',
+                                                textDecoration: 'underline',
+                                                padding: 0,
+                                                minWidth: 'auto',
+                                                fontWeight: 500
                                             }}
-                                            onClick={() => window.open(row.file_url, '_blank')}
+                                            onClick={() => {
+                                                window.open(row.file_url, '_blank');
+                                                setIsNew(0);
+                                                setItems(prev =>
+                                                    prev.map(item =>
+                                                        item.ID === row.ID ? { ...item, is_new: 0 } : item
+                                                    )
+                                                );
+                                                setIsNew(row.ID); // ถ้าต้องการอัปเดตฝั่ง server ด้วย
+                                            }}
                                         >
                                             กดเพื่อตรวจสอบความถูกต้อง
                                         </Button>
                                     </TableCell>
                                     <TableCell align="center">
                                         <Button
-                                            sx={{ fontSize: '1.5rem' }}
+                                            sx={{
+                                                fontSize: '1.5rem',
+                                                color: 'green',
+                                                '&:hover': { bgcolor: '#e8f5e9' }
+                                            }}
                                             onClick={() => extractSelectInvoice(row.ID)}
+                                            disabled={row.is_new === "1"}
                                         >
                                             ✅
                                         </Button>
                                     </TableCell>
+
                                     <TableCell align="center">
                                         <Button
-                                            sx={{ fontSize: '1.5rem' }}
+                                            sx={{
+                                                fontSize: '1.5rem',
+                                                color: 'red',
+                                                '&:hover': { bgcolor: '#ffebee' }
+                                            }}
                                         >
                                             ❌
                                         </Button>
@@ -169,7 +213,8 @@ function Invoice() {
                 </Table>
             </TableContainer>
         </Box>
-    )
+    );
+
 }
 
 export default Invoice

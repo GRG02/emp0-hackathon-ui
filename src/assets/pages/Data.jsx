@@ -90,73 +90,146 @@ function Data() {
     return (
         <Box sx={container}>
             <Box sx={{ height: '4.5rem' }} />
-            <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'start', width: '100%', }}>
-                <Typography sx={{ fontSize: '2rem', fontWeight: 'bold' }}>ข้อมูลจากใบแจ้งหนี้</Typography>
-                <Button sx={{ ...ml_bt, ml: 'auto' }}>Click</Button>
+
+            <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+                <Typography sx={{ fontSize: '2rem', fontWeight: 'bold' }}>
+                    ข้อมูลจากใบแจ้งหนี้
+                </Typography>
             </Box>
-            <Box sx={{ height: '1rem' }} />
-            <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'start', width: '100%', }}>
+
+            <Box sx={{ height: '0.5rem' }} />
+
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    alignItems: 'center',
+                    gap: 2,
+                    width: '100%',
+                    bgcolor: '#fff3e0',
+                    p: 2,
+                    borderRadius: 2,
+                }}
+            >
                 <Autocomplete
-                    options={[...new Set(items.map(item => item.company_name).filter(Boolean))]} // ดึงเฉพาะชื่อบริษัทที่ไม่ซ้ำและไม่ null
+                    options={[...new Set(items.map(item => item.company_name).filter(Boolean))]}
                     value={company}
                     onChange={(event, newValue) => setCompany(newValue)}
-                    renderInput={(params) => <TextField {...params} label="เลือกคู่ค้า" />}
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            label="เลือกคู่ค้า"
+                            sx={{
+                                backgroundColor: 'white',
+                                '& .MuiInputBase-input': { color: 'black' },
+                                '& .MuiInputLabel-root': { color: 'black' },
+                            }}
+                        />
+                    )}
                     freeSolo
                     sx={{ width: 225 }}
                 />
+
                 <Autocomplete
-                    options={[...new Set(items.map(item => item.product_name).filter(Boolean))]} // ดึงเฉพาะชื่อบริษัทที่ไม่ซ้ำและไม่ null
+                    options={[...new Set(items.map(item => item.product_name).filter(Boolean))]}
                     value={product}
                     onChange={(event, newValue) => setProduct(newValue)}
-                    renderInput={(params) => <TextField {...params} label="เลือกสินค้า" />}
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            label="เลือกสินค้า"
+                            sx={{
+                                backgroundColor: 'white',
+                                '& .MuiInputBase-input': { color: 'black' },
+                                '& .MuiInputLabel-root': { color: 'black' },
+                            }}
+                        />
+                    )}
                     freeSolo
-                    sx={{ width: 225, ml: '1rem' }}
+                    sx={{ width: 225 }}
                 />
-                {/* <TextField
-                    label="ค้นตั้งแต่"
-                    value={start}
-                    onChange={(event) => setStart(event.target.value)}
-                    type="date"
-                    InputLabelProps={{ shrink: true }}
-                    InputProps={{ inputProps: { max: end } }}
-                    sx={{ width: 175, ml: '1rem' }}
-                />
-                <TextField
-                    label="จนถึง"
-                    value={end}
-                    onChange={(event) => setEnd(event.target.value)}
-                    type="date"
-                    InputLabelProps={{ shrink: true }}
-                    InputProps={{ inputProps: { min: start } }}
-                    sx={{ width: 175, ml: '1rem' }}
-                /> */}
-                <Button sx={{ ...ml_bt, ml: '1rem' }} onClick={invoiceDataFilter}>ค้นหา</Button>
-                <Button sx={{ ...ml_bt, ml: '1rem' }} onClick={getAllInvoiceData}>reset</Button>
-                <Button sx={{ ...ml_bt, ml: '1rem' }} onClick={makeReport}>report</Button>
+
+
+                <Button
+                    variant="contained"
+                    color="warning"
+                    onClick={invoiceDataFilter}
+                    sx={{
+                        height: '56px',
+                        minWidth: '100px',
+                    }}
+                >
+                    ค้นหา
+                </Button>
+
+                <Button
+                    variant="contained"
+                    onClick={getAllInvoiceData}
+                    sx={{
+                        ml: 'auto',
+                        height: '56px',
+                        minWidth: '100px',
+                        backgroundColor: '#9e9e9e',
+                        color: 'white',
+                        '&:hover': {
+                            backgroundColor: '#757575',
+                        },
+                    }}
+                >
+                    Reset 🔄
+                </Button>
+
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={makeReport}
+                    sx={{
+                        height: '56px',
+                        minWidth: '100px',
+                    }}
+                >
+                    Report
+                </Button>
             </Box>
+
             <Box sx={{ height: '1rem' }} />
-            <TableContainer sx={{ maxHeight: '70vh', border: '2px solid darkorange' }}>
-                <Table aria-label="simple table">
-                    <TableHead sx={{ bgcolor: 'darkorange' }}>
+
+            <TableContainer sx={{ maxHeight: '70vh', border: '2px solid darkorange', borderRadius: 2 }}>
+                <Table stickyHeader>
+                    <TableHead>
                         <TableRow>
-                            <TableCell align='center' sx={{ color: 'white' }}>ชื่อบริษัทหรือคู่ค้า</TableCell>
-                            <TableCell align='center' sx={{ color: 'white' }}>ชื่อสินค้าหรือบริการ</TableCell>
-                            <TableCell align='center' sx={{ color: 'white' }}>จำนวน</TableCell>
-                            <TableCell align='center' sx={{ color: 'white' }}>ราคาต่อหน่วย</TableCell>
-                            <TableCell align='center' sx={{ color: 'white' }}>กำหนดชำระ</TableCell>
+                            {[
+                                'ชื่อบริษัทหรือคู่ค้า',
+                                'ชื่อสินค้าหรือบริการ',
+                                'จำนวน',
+                                'ราคาต่อหน่วย',
+                                'กำหนดชำระ',
+                            ].map((text, idx) => (
+                                <TableCell
+                                    key={idx}
+                                    align="center"
+                                    sx={{
+                                        backgroundColor: '#fb8c00',
+                                        color: 'white',
+                                        fontWeight: 'bold',
+                                        zIndex: 1,
+                                    }}
+                                >
+                                    {text}
+                                </TableCell>
+                            ))}
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {items.length === 0 ? (
-                            <TableRow sx={{ border: 'none', bgcolor: '#f9f9f9' }}>
+                            <TableRow sx={{ bgcolor: '#f9f9f9' }}>
                                 <TableCell
                                     colSpan={5}
                                     align="center"
                                     sx={{
-                                        border: 'none',
                                         padding: '2rem',
                                         color: '#999',
-                                        fontStyle: 'italic'
+                                        fontStyle: 'italic',
                                     }}
                                 >
                                     ยังไม่มีข้อมูล
@@ -167,25 +240,16 @@ function Data() {
                                 <TableRow
                                     key={index}
                                     sx={{
-                                        backgroundColor: index % 2 === 0 ? '#f9f9f9' : '#ffffff',
+                                        backgroundColor: index % 2 === 0 ? '#fdfdfd' : '#f9f9f9',
                                         '&:hover': { backgroundColor: '#e3f2fd' },
+                                        transition: 'background-color 0.2s',
                                     }}
                                 >
-                                    <TableCell align="center">
-                                        {row.company_name ?? '-'}
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        {row.product_name ?? '-'}
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        {row.qty ?? '-'}
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        {row.unit_price ?? '-'}
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        {row.due_at ?? '-'}
-                                    </TableCell>
+                                    <TableCell align="center">{row.company_name ?? '-'}</TableCell>
+                                    <TableCell align="center">{row.product_name ?? '-'}</TableCell>
+                                    <TableCell align="center">{row.qty ?? '-'}</TableCell>
+                                    <TableCell align="center">{row.unit_price ?? '-'}</TableCell>
+                                    <TableCell align="center">{row.due_at ?? '-'}</TableCell>
                                 </TableRow>
                             ))
                         )}
@@ -196,7 +260,8 @@ function Data() {
             <Loading open={openLoading} onClose={() => setOpenLoading(false)} title="กําลังดาวน์โหลด..." message="กรุณารอสักครู่..." />
             <Download open={openDownload} onClose={() => setOpenDownload(false)} url={fileUrl} />
         </Box>
-    )
+    );
+
 }
 
 export default Data
