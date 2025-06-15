@@ -2,7 +2,11 @@ import { Drawer, List, ListItem, ListItemIcon, ListItemText, ListItemButton, Too
 import { Home, ReceiptLong, TableChart, ChatBubbleOutline } from '@mui/icons-material'
 import { Link } from 'react-router-dom'
 
-const drawerWidth = 240
+const drawerWidth = {
+    sm: 160,
+    md: 200,
+    lg: 240,
+}
 
 const Sidebar = () => {
   return (
