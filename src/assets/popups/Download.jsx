@@ -34,6 +34,7 @@ function Download({ open, onClose, url, title = "สร้างรายงา�
                             href={url}
                             target="_blank"
                             rel="noopener noreferrer"
+                            onClick={onClose}
                         >
                             ดาวน์โหลดไฟล์
                         </Button>
