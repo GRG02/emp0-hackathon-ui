@@ -23,14 +23,16 @@ function Invoice() {
     };
 
     const extractSelectInvoice = async (ID) => {
+
+        // ลบ item ที่มี ID ตรงกันออกจาก state
+        setItems((prevItems) => prevItems.filter(item => item.ID !== ID));
+
         try {
             const res = await axios.post(extractUrl, {
                 ID: ID
             });
             console.log(res.data);
 
-            // ลบ item ที่มี ID ตรงกันออกจาก state
-            setItems((prevItems) => prevItems.filter(item => item.ID !== ID));
         } catch (error) {
             console.log(error);
         }

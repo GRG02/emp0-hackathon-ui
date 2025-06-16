@@ -74,12 +74,12 @@ const Sidebar = ({ count }) => {
             <Divider />
 
             <List sx={{ flexGrow: 1, overflowY: 'auto', pt: 1 }}>
-                {/* <ListItem disablePadding>
+                <ListItem disablePadding>
                     <ListItemButton component={Link} to="/">
                         <ListItemIcon><Home /></ListItemIcon>
                         <ListItemText primary="หน้าหลัก" />
                     </ListItemButton>
-                </ListItem> */}
+                </ListItem>
 
                 <ListItem disablePadding>
                     <ListItemButton component={Link} to="/invoice">

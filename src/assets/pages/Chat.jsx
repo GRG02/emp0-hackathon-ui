@@ -21,7 +21,7 @@ function Chat() {
         { prompt: input },
         {
           headers: { 'Content-Type': 'application/json' },
-          timeout: 30000,
+          timeout: 6000,
         }
       );
 
@@ -29,6 +29,7 @@ function Chat() {
         role: 'assistant',
         content:
           response.data?.reply ||
+          response.data?.invoices?.choices?.[0]?.message?.content ||
           response.data?.body ||
           JSON.stringify(response.data, null, 2) ||
           '❌ ไม่พบคำตอบจากระบบ',
@@ -54,22 +55,26 @@ function Chat() {
     <div
       style={{
         display: 'flex',
-        justifyContent: 'center',  // กึ่งกลางแนวนอน
-        alignItems: 'center',      // กึ่งกลางแนวตั้ง
-        height: '100vh',           // เต็มความสูงหน้าจอ
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
         backgroundColor: '#fffaf3',
         padding: 20,
+        width: '100vw',       // กว้างเต็ม viewport
+        maxWidth: '1200px',   // กำหนดขอบเขตกว้างสุด
+        margin: '0 auto',     // กึ่งกลางแนวนอน
+        boxSizing: 'border-box',
       }}
     >
       <div
         style={{
           padding: 30,
-          width: '600px',
-          height: '500px',
+          width: '100%',      // เต็ม container
+          height: '700px',
           backgroundColor: '#fff',
           border: '2px solid #ff9800',
           borderRadius: 12,
-          boxShadow: '0 0 10px rgba(255, 165, 0, 0.3)',
+          boxShadow: '0 0 12px rgba(255, 165, 0, 0.3)',
           display: 'flex',
           flexDirection: 'column',
         }}
@@ -77,6 +82,7 @@ function Chat() {
         <h2 style={{ textAlign: 'center', color: '#ff7f00', marginBottom: 20 }}>
           🧠 ChatBot
         </h2>
+
         <div
           style={{
             border: '1px solid #ffcc80',
@@ -104,6 +110,7 @@ function Chat() {
                   padding: '8px 12px',
                   borderRadius: 16,
                   maxWidth: '80%',
+                  whiteSpace: 'pre-wrap',
                   wordWrap: 'break-word',
                 }}
               >
@@ -113,6 +120,7 @@ function Chat() {
           ))}
           {loading && <div>⏳ กำลังตอบ...</div>}
         </div>
+
         <div style={{ display: 'flex' }}>
           <input
             type="text"
